@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>MICASH - B2B Payment System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Poppins', 'Roboto', Tahoma, Geneva, Verdana, sans-serif;
+            background: radial-gradient(circle at 20% 30%, #0a0a0a 0%, #000000 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+        }
+
+        /* Animated golden particles effect */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(rgba(212, 175, 55, 0.15) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Logo styling */
+        .logo {
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .logo h1 {
+            font-size: 3.2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #F3E5AB 0%, #D4AF37 30%, #FFD700 50%, #B8860B 80%, #D4AF37 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 30px rgba(212, 175, 55, 0.4);
+            letter-spacing: 3px;
+            animation: shimmer 3s linear infinite;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: 0% center; }
+            100% { background-position: 200% center; }
+        }
+
+        .logo .tagline {
+            color: #D4AF37;
+            font-size: 0.7rem;
+            letter-spacing: 5px;
+            margin-top: 0.5rem;
+            text-transform: uppercase;
+            font-weight: 300;
+            opacity: 0.9;
+        }
+
+        .logo .badge {
+            display: inline-block;
+            background: rgba(212, 175, 55, 0.15);
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            border-radius: 30px;
+            padding: 4px 12px;
+            font-size: 0.7rem;
+            color: #D4AF37;
+            margin-top: 12px;
+            letter-spacing: 1px;
+        }
+
+        .container {
+            background: rgba(8, 8, 8, 0.92);
+            backdrop-filter: blur(12px);
+            border-radius: 28px;
+            padding: 2.2rem;
+            width: 500px;
+            max-width: 100%;
+            border: 1px solid rgba(212, 175, 55, 0.35);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(212, 175, 55, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        h2 {
+            color: #D4AF37;
+            text-align: center;
+            margin-bottom: 1.8rem;
+            font-weight: 600;
+            font-size: 1.6rem;
+            letter-spacing: 1px;
+        }
+
+        .input-group {
+            margin-bottom: 1.3rem;
+        }
+
+        label {
+            display: block;
+            color: #E8C86A;
+            margin-bottom: 0.5rem;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 12px 16px;
+            background: #111111;
+            border: 1.5px solid #2a2a2a;
+            border-radius: 14px;
+            color: #f0f0f0;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+            font-family: inherit;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #D4AF37;
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2);
+            background: #0a0a0a;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(95deg, #D4AF37 0%, #B8860B 100%);
+            border: none;
+            border-radius: 40px;
+            color: #000000;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-top: 8px;
+            letter-spacing: 1px;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.35);
+            filter: brightness(1.05);
+        }
+
+        button:active {
+            transform: translateY(1px);
+        }
+
+        button.secondary {
+            background: linear-gradient(95deg, #2a2a2a 0%, #1a1a1a 100%);
+            color: #D4AF37;
+            border: 1px solid rgba(212, 175, 55, 0.4);
+        }
+
+        .switch-link {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: #888;
+            font-size: 0.85rem;
+        }
+
+        .switch-link a {
+            color: #D4AF37;
+            text-decoration: none;
+            cursor: pointer;
+            font-weight: 600;
+            margin-left: 5px;
+        }
+
+        .switch-link a:hover {
+            text-decoration: underline;
+        }
+
+        .error {
+            background: rgba(220, 53, 69, 0.15);
+            border-left: 4px solid #dc3545;
+            color: #ffa2a2;
+            padding: 12px;
+            border-radius: 12px;
+            margin-bottom: 1.2rem;
+            text-align: left;
+            font-size: 0.85rem;
+        }
+
+        .success {
+            background: rgba(212, 175, 55, 0.12);
+            border-left: 4px solid #D4AF37;
+            color: #F3E5AB;
+            padding: 12px;
+            border-radius: 12px;
+            margin-bottom: 1.2rem;
+            text-align: left;
+            font-size: 0.85rem;
+        }
+
+        .card {
+            background: #0a0a0a;
+            border-radius: 18px;
+            padding: 1.2rem;
+            margin-bottom: 1.2rem;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .token-info {
+            background: #000000;
+            padding: 10px;
+            border-radius: 12px;
+            font-family: monospace;
+            font-size: 0.7rem;
+            color: #D4AF37;
+            word-break: break-all;
+            margin-top: 8px;
+        }
+
+        .flex-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .flex-row button {
+            width: auto;
+            padding: 8px 18px;
+        }
+
+        hr {
+            border-color: rgba(212, 175, 55, 0.2);
+            margin: 15px 0;
+        }
+
+        .amount-highlight {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #D4AF37;
+        }
+
+        small {
+            display: block;
+            margin-top: 6px;
+            color: #777;
+            font-size: 0.7rem;
+        }
+
+        @media (max-width: 550px) {
+            .container { padding: 1.5rem; }
+            .logo h1 { font-size: 2.2rem; }
+        }
+    </style>
+</head>
+<body>
+<div id="root"></div>
+
+<script>
+    // ============================================================
+    // CONFIGURATION - UPDATE THIS WITH YOUR RENDER BACKEND URL
+    // ============================================================
+    const API_BASE_URL = 'https://your-backend.onrender.com';  // <-- CHANGE THIS
+    
+    // For local testing you can use: 'http://localhost:8000' if running PHP locally
+    
+    // ============================================================
+    // FULL REACTIVE APP (Vanilla JS with state management)
+    // ============================================================
+    
+    // Simple state management
+    let currentView = 'login'; // 'login', 'payment'
+    let authData = {
+        email: '',
+        accessToken: ''  // stored after login
+    };
+    
+    // Helper to call backend
+    async function callBackend(endpoint, payload) {
+        const url = `${API_BASE_URL}/${endpoint}`;
+        try {
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            });
+            
+            if (!response.ok) {
+                const errorText = await response.text();
+                throw new Error(`HTTP ${response.status}: ${errorText.substring(0, 100)}`);
+            }
+            
+            const data = await response.json();
+            return data;
+        } catch (err) {
+            console.error('API call failed:', err);
+            throw new Error(err.message || 'Network error. Check if backend is running.');
+        }
+    }
+    
+    // Render the whole app based on state
+    function renderApp() {
+        const root = document.getElementById('root');
+        if (currentView === 'login') {
+            root.innerHTML = renderLoginPage();
+            attachLoginEvents();
+        } else if (currentView === 'payment') {
+            root.innerHTML = renderPaymentPage();
+            attachPaymentEvents();
+        }
+    }
+    
+    // ------------------- LOGIN / SIGNUP PAGE -------------------
+    function renderLoginPage() {
+        return `
+            <div class="container">
+                <div class="logo">
+                    <h1>MICASH</h1>
+                    <div class="tagline">✦ B2B PAYMENTS ✦</div>
+                    <div class="badge">ENTERPRISE · SECURE · GOLD STANDARD</div>
+                </div>
+                <h2 id="formTitle">Login</h2>
+                <div id="messageArea"></div>
+                <form id="authForm">
+                    <div class="input-group">
+                        <label>📧 Email Address</label>
+                        <input type="email" id="email" placeholder="partner@company.com" required autocomplete="email">
+                    </div>
+                    <div class="input-group">
+                        <label>🔒 Password</label>
+                        <input type="password" id="password" placeholder="··········" required autocomplete="current-password">
+                    </div>
+                    <div id="tokenField" class="input-group" style="display: none;">
+                        <label>🔑 Firestore Access Token</label>
+                        <input type="text" id="accessToken" placeholder="Paste your OAuth2 access token here">
+                        <small>Required for signup. Token is not stored permanently.</small>
+                    </div>
+                    <button type="submit" id="submitBtn">Login →</button>
+                </form>
+                <div class="switch-link">
+                    <span id="switchText">No account?</span> 
+                    <a id="switchModeBtn">Sign Up</a>
+                </div>
+                <div style="margin-top: 20px; text-align: center; font-size: 11px; color: #555;">
+                    ⚡ Every session you paste the access token | B2B secured
+                </div>
+            </div>
+        `;
+    }
+    
+    let isLoginMode = true;
+    
+    function attachLoginEvents() {
+        const form = document.getElementById('authForm');
+        const switchBtn = document.getElementById('switchModeBtn');
+        const formTitle = document.getElementById('formTitle');
+        const tokenField = document.getElementById('tokenField');
+        const switchTextSpan = document.getElementById('switchText');
+        const submitBtn = document.getElementById('submitBtn');
+        
+        function updateModeUI() {
+            if (isLoginMode) {
+                formTitle.innerText = 'Login';
+                tokenField.style.display = 'none';
+                switchTextSpan.innerText = 'No account?';
+                switchBtn.innerText = 'Sign Up';
+                submitBtn.innerText = 'Login →';
+            } else {
+                formTitle.innerText = 'Create Account';
+                tokenField.style.display = 'block';
+                switchTextSpan.innerText = 'Already have an account?';
+                switchBtn.innerText = 'Login';
+                submitBtn.innerText = 'Sign Up →';
+            }
+        }
+        
+        switchBtn.onclick = () => {
+            isLoginMode = !isLoginMode;
+            updateModeUI();
+            clearMessages();
+        };
+        
+        form.onsubmit = async (e) => {
+            e.preventDefault();
+            clearMessages();
+            
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const accessTokenInput = document.getElementById('accessToken')?.value.trim() || '';
+            
+            if (!email || !password) {
+                showMessage('Email and password are required', 'error');
+                return;
+            }
+            
+            if (!isLoginMode && !accessTokenInput) {
+                showMessage('Access token is required for signup (paste your Firestore token)', 'error');
+                return;
+            }
+            
+            showMessage('Processing...', 'success');
+            
+            try {
+                let payload = {
+                    action: isLoginMode ? 'login' : 'signup',
+                    email: email,
+                    password: password
+                };
+                
+                if (!isLoginMode) {
+                    payload.access_token = accessTokenInput;
+                } else {
+                    // For login, we still need to send token? Actually login endpoint expects access_token field.
+                    // According to backend auth.php, it expects access_token in all requests.
+                    // But for login we don't have token yet. Let's adapt: login uses the stored token from DB.
+                    // But auth.php line: if (empty($accessToken)) { error }
+                    // Wait — reviewing backend: auth.php requires accessToken for every request.
+                    // That's a design choice: they want token to validate firestore connection.
+                    // So we need to ask user to paste token even at login? Not ideal but to keep consistent with spec,
+                    // I'll improve: For login, we also need a valid firestore token to read DB. So we ask token always.
+                    if (!accessTokenInput) {
+                        showMessage('Please paste your Firestore Access Token to authenticate with database', 'error');
+                        return;
+                    }
+                    payload.access_token = accessTokenInput;
+                }
+                
+                // If login mode but token not provided above, handle elegantly
+                if (isLoginMode && !payload.access_token) {
+                    showMessage('Access token required to connect to Firestore', 'error');
+                    return;
+                }
+                
+                const result = await callBackend('auth.php', payload);
+                
+                if (result.success) {
+                    if (isLoginMode) {
+                        // Store token and email for payment page
+                        authData.email = email;
+                        authData.accessToken = payload.access_token;
+                        currentView = 'payment';
+                        renderApp();
+                    } else {
+                        showMessage('✅ Account created! Please login with your credentials.', 'success');
+                        isLoginMode = true;
+                        updateModeUI();
+                        document.getElementById('password').value = '';
+                        document.getElementById('accessToken') && (document.getElementById('accessToken').value = '');
+                    }
+                } else {
+                    showMessage(result.error || 'Authentication failed', 'error');
+                }
+            } catch (err) {
+                showMessage(`Error: ${err.message}`, 'error');
+            }
+        };
+        
+        updateModeUI();
+    }
+    
+    // ------------------- PAYMENT PAGE -------------------
+    function renderPaymentPage() {
+        return `
+            <div class="container">
+                <div class="logo">
+                    <h1>MICASH</h1>
+                    <div class="tagline">✦ B2B PAYMENTS ✦</div>
+                </div>
+                
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem;">
+                    <span style="color: #D4AF37; font-weight: 500;">👤 ${escapeHtml(authData.email)}</span>
+                    <button id="logoutBtn" class="secondary" style="width: auto; padding: 6px 18px; margin:0;">Logout</button>
+                </div>
+                
+                <div class="card">
+                    <div class="input-group">
+                        <label>🔑 Firestore Access Token (paste for this session)</label>
+                        <input type="text" id="sessionAccessToken" placeholder="Paste your OAuth2 access token" value="${escapeHtml(authData.accessToken || '')}">
+                        <small>Token is required to execute B2B payment. Must have Firestore write access.</small>
+                    </div>
+                </div>
+                
+                <form id="paymentForm">
+                    <div class="input-group">
+                        <label>💰 Amount (USD)</label>
+                        <input type="number" step="0.01" id="amount" placeholder="0.00" required>
+                    </div>
+                    <div class="input-group">
+                        <label>🏢 Recipient Business ID / Account</label>
+                        <input type="text" id="recipient" placeholder="Business Tax ID or Account Number" required>
+                    </div>
+                    <div class="input-group">
+                        <label>📄 Description / Reference</label>
+                        <textarea id="description" rows="2" placeholder="Invoice #PO-2025, Contract ref..."></textarea>
+                    </div>
+                    
+                    <div id="paymentMessage"></div>
+                    
+                    <div class="flex-row">
+                        <button type="submit" id="payBtn">💸 Send B2B Payment</button>
+                        <button type="button" id="resetBtn" class="secondary">⟳ Reset</button>
+                    </div>
+                </form>
+                
+                <div id="transactionResult" style="margin-top: 1rem;"></div>
+                <hr>
+                <div style="font-size: 11px; text-align: center; color: #666;">
+                    MICASH • Secure B2B Gateway • Access token never stored on server
+                </div>
+            </div>
+        `;
+    }
+    
+    function attachPaymentEvents() {
+        const logoutBtn = document.getElementById('logoutBtn');
+        const paymentForm = document.getElementById('paymentForm');
+        const resetBtn = document.getElementById('resetBtn');
+        const amountInput = document.getElementById('amount');
+        const recipientInput = document.getElementById('recipient');
+        const descInput = document.getElementById('description');
+        const tokenInput = document.getElementById('sessionAccessToken');
+        
+        logoutBtn.onclick = () => {
+            currentView = 'login';
+            authData = { email: '', accessToken: '' };
+            renderApp();
+        };
+        
+        resetBtn.onclick = () => {
+            if (amountInput) amountInput.value = '';
+            if (recipientInput) recipientInput.value = '';
+            if (descInput) descInput.value = '';
+            document.getElementById('paymentMessage').innerHTML = '';
+            document.getElementById('transactionResult').innerHTML = '';
+        };
+        
+        paymentForm.onsubmit = async (e) => {
+            e.preventDefault();
+            const messageDiv = document.getElementById('paymentMessage');
+            const resultDiv = document.getElementById('transactionResult');
+            messageDiv.innerHTML = '';
+            resultDiv.innerHTML = '';
+            
+            const accessToken = tokenInput.value.trim();
+            const amount = parseFloat(amountInput.value);
+            const recipient = recipientInput.value.trim();
+            const description = descInput.value.trim();
+            
+            if (!accessToken) {
+                messageDiv.innerHTML = '<div class="error">❌ Firestore Access Token is required. Paste your token to proceed.</div>';
+                return;
+            }
+            if (isNaN(amount) || amount <= 0) {
+                messageDiv.innerHTML = '<div class="error">❌ Please enter a valid amount greater than 0.</div>';
+                return;
+            }
+            if (!recipient) {
+                messageDiv.innerHTML = '<div class="error">❌ Recipient Business ID is required.</div>';
+                return;
+            }
+            
+            messageDiv.innerHTML = '<div class="success">⏳ Processing B2B transaction... Please wait.</div>';
+            
+            try {
+                const payload = {
+                    access_token: accessToken,
+                    amount: amount,
+                    recipient: recipient,
+                    description: description,
+                    email: authData.email
+                };
+                
+                const response = await callBackend('payment.php', payload);
+                
+                if (response.success) {
+                    resultDiv.innerHTML = `
+                        <div class="success">
+                            ✅ <strong>PAYMENT COMPLETED</strong><br>
+                            Transaction ID: ${escapeHtml(response.transaction_id)}<br>
+                            Amount: <span class="amount-highlight">$${response.amount}</span><br>
+                            Recipient: ${escapeHtml(response.recipient)}<br>
+                            Status: Settled ✓
+                        </div>
+                    `;
+                    // Optional: clear form fields after success
+                    amountInput.value = '';
+                    recipientInput.value = '';
+                    descInput.value = '';
+                    messageDiv.innerHTML = '';
+                } else {
+                    messageDiv.innerHTML = `<div class="error">❌ Payment failed: ${escapeHtml(response.error || 'Unknown error')}</div>`;
+                }
+            } catch (err) {
+                messageDiv.innerHTML = `<div class="error">❌ Backend error: ${escapeHtml(err.message)}<br><small>Make sure backend URL is correct and CORS is enabled.</small></div>`;
+            }
+        };
+    }
+    
+    // Helper functions
+    function showMessage(msg, type) {
+        const msgDiv = document.getElementById('messageArea');
+        if (msgDiv) {
+            msgDiv.innerHTML = `<div class="${type}">${escapeHtml(msg)}</div>`;
+        }
+    }
+    
+    function clearMessages() {
+        const msgDiv = document.getElementById('messageArea');
+        if (msgDiv) msgDiv.innerHTML = '';
+    }
+    
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
+        }).replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, function(c) {
+            return c;
+        });
+    }
+    
+    // Check API base URL configuration
+    window.onload = () => {
+        if (API_BASE_URL === 'https://your-backend.onrender.com' || API_BASE_URL.includes('your-backend')) {
+            const root = document.getElementById('root');
+            root.innerHTML = `
+                <div class="container" style="text-align:center">
+                    <div class="logo"><h1>MICASH</h1></div>
+                    <div class="error" style="margin-top:20px">
+                        ⚠️ Configuration Required<br>
+                        Please update <strong>API_BASE_URL</strong> inside the HTML to your Render backend URL.<br>
+                        <code style="display:block;margin-top:12px;background:#000;padding:8px">const API_BASE_URL = 'https://your-app.onrender.com';</code>
+                    </div>
+                </div>
+            `;
+            return;
+        }
+        renderApp();
+    };
+</script>
+</body>
+</html>
