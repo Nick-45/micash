@@ -1,0 +1,13 @@
+micash/
+├── frontend/
+│   ├── index.html          (Login/Signup)
+│   ├── payment.html        (Payment Page)
+│   ├── style.css
+│   └── app.js
+├── backend/
+│   ├── config.php
+│   ├── auth.php
+│   ├── payment.php
+│   └── firestore/
+│       └── FirestoreClient.php
+└── .env (optional)
