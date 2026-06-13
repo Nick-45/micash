@@ -332,22 +332,22 @@
             <div class="container">
                 <div class="logo">
                     <h1>MICASH</h1>
-                    <div class="tagline">✦ B2B PAYMENTS ✦</div>
+                    <div class="tagline"> B2B PAYMENTS </div>
                     <div class="badge">ENTERPRISE · SECURE · GOLD STANDARD</div>
                 </div>
                 <h2 id="formTitle">Login</h2>
                 <div id="messageArea"></div>
                 <form id="authForm">
                     <div class="input-group">
-                        <label>📧 Email Address</label>
+                        <label> Email Address</label>
                         <input type="email" id="email" placeholder="partner@company.com" required autocomplete="email">
                     </div>
                     <div class="input-group">
-                        <label>🔒 Password</label>
+                        <label> Password</label>
                         <input type="password" id="password" placeholder="··········" required autocomplete="current-password">
                     </div>
                     <div id="tokenField" class="input-group" style="display: none;">
-                        <label>🔑 Firestore Access Token</label>
+                        <label> Firestore Access Token</label>
                         <input type="text" id="accessToken" placeholder="Paste your OAuth2 access token here">
                         <small>Required for signup. Token is not stored permanently.</small>
                     </div>
@@ -358,7 +358,7 @@
                     <a id="switchModeBtn">Sign Up</a>
                 </div>
                 <div style="margin-top: 20px; text-align: center; font-size: 11px; color: #555;">
-                    ⚡ Every session you paste the access token | B2B secured
+                     Every session you paste the access token | B2B secured
                 </div>
             </div>
         `;
@@ -457,7 +457,7 @@
                         currentView = 'payment';
                         renderApp();
                     } else {
-                        showMessage('✅ Account created! Please login with your credentials.', 'success');
+                        showMessage('Account created! Please login with your credentials.', 'success');
                         isLoginMode = true;
                         updateModeUI();
                         document.getElementById('password').value = '';
@@ -480,17 +480,17 @@
             <div class="container">
                 <div class="logo">
                     <h1>MICASH</h1>
-                    <div class="tagline">✦ B2B PAYMENTS ✦</div>
+                    <div class="tagline"> B2B PAYMENTS </div>
                 </div>
                 
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem;">
-                    <span style="color: #D4AF37; font-weight: 500;">👤 ${escapeHtml(authData.email)}</span>
+                    <span style="color: #D4AF37; font-weight: 500;"> ${escapeHtml(authData.email)}</span>
                     <button id="logoutBtn" class="secondary" style="width: auto; padding: 6px 18px; margin:0;">Logout</button>
                 </div>
                 
                 <div class="card">
                     <div class="input-group">
-                        <label>🔑 Firestore Access Token (paste for this session)</label>
+                        <label> Firestore Access Token (paste for this session)</label>
                         <input type="text" id="sessionAccessToken" placeholder="Paste your OAuth2 access token" value="${escapeHtml(authData.accessToken || '')}">
                         <small>Token is required to execute B2B payment. Must have Firestore write access.</small>
                     </div>
@@ -498,22 +498,22 @@
                 
                 <form id="paymentForm">
                     <div class="input-group">
-                        <label>💰 Amount (USD)</label>
+                        <label> Amount (USD)</label>
                         <input type="number" step="0.01" id="amount" placeholder="0.00" required>
                     </div>
                     <div class="input-group">
-                        <label>🏢 Recipient Business ID / Account</label>
+                        <label> Recipient Business ID / Account</label>
                         <input type="text" id="recipient" placeholder="Business Tax ID or Account Number" required>
                     </div>
                     <div class="input-group">
-                        <label>📄 Description / Reference</label>
+                        <label> Description / Reference</label>
                         <textarea id="description" rows="2" placeholder="Invoice #PO-2025, Contract ref..."></textarea>
                     </div>
                     
                     <div id="paymentMessage"></div>
                     
                     <div class="flex-row">
-                        <button type="submit" id="payBtn">💸 Send B2B Payment</button>
+                        <button type="submit" id="payBtn"> Send B2B Payment</button>
                         <button type="button" id="resetBtn" class="secondary">⟳ Reset</button>
                     </div>
                 </form>
@@ -563,19 +563,19 @@
             const description = descInput.value.trim();
             
             if (!accessToken) {
-                messageDiv.innerHTML = '<div class="error">❌ Firestore Access Token is required. Paste your token to proceed.</div>';
+                messageDiv.innerHTML = '<div class="error"> Firestore Access Token is required. Paste your token to proceed.</div>';
                 return;
             }
             if (isNaN(amount) || amount <= 0) {
-                messageDiv.innerHTML = '<div class="error">❌ Please enter a valid amount greater than 0.</div>';
+                messageDiv.innerHTML = '<div class="error"> Please enter a valid amount greater than 0.</div>';
                 return;
             }
             if (!recipient) {
-                messageDiv.innerHTML = '<div class="error">❌ Recipient Business ID is required.</div>';
+                messageDiv.innerHTML = '<div class="error">Recipient Business ID is required.</div>';
                 return;
             }
             
-            messageDiv.innerHTML = '<div class="success">⏳ Processing B2B transaction... Please wait.</div>';
+            messageDiv.innerHTML = '<div class="success">Processing B2B transaction... Please wait.</div>';
             
             try {
                 const payload = {
@@ -591,7 +591,7 @@
                 if (response.success) {
                     resultDiv.innerHTML = `
                         <div class="success">
-                            ✅ <strong>PAYMENT COMPLETED</strong><br>
+                             <strong>PAYMENT COMPLETED</strong><br>
                             Transaction ID: ${escapeHtml(response.transaction_id)}<br>
                             Amount: <span class="amount-highlight">$${response.amount}</span><br>
                             Recipient: ${escapeHtml(response.recipient)}<br>
@@ -645,7 +645,7 @@
                 <div class="container" style="text-align:center">
                     <div class="logo"><h1>MICASH</h1></div>
                     <div class="error" style="margin-top:20px">
-                        ⚠️ Configuration Required<br>
+                         Configuration Required<br>
                         Please update <strong>API_BASE_URL</strong> inside the HTML to your Render backend URL.<br>
                         <code style="display:block;margin-top:12px;background:#000;padding:8px">const API_BASE_URL = 'https://your-app.onrender.com';</code>
                     </div>
