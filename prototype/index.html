@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>MICASH - B2B Payment System</title>
+    <title>MICASH - B2B Payment Dashboard | Prototype</title>
     <style>
         * {
             margin: 0;
@@ -12,17 +12,13 @@
         }
 
         body {
-            font-family: 'Segoe UI', 'Poppins', 'Roboto', Tahoma, Geneva, Verdana, sans-serif;
-            background: radial-gradient(circle at 20% 30%, #0a0a0a 0%, #000000 100%);
+            font-family: 'Segoe UI', 'Poppins', 'Inter', system-ui, -apple-system, sans-serif;
+            background: radial-gradient(circle at 20% 10%, #0a0a0a 0%, #000000 100%);
             min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            position: relative;
+            overflow-x: hidden;
         }
 
-        /* Animated golden particles effect */
+        /* Animated golden dust */
         body::before {
             content: '';
             position: fixed;
@@ -30,94 +26,123 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: radial-gradient(rgba(212, 175, 55, 0.15) 1px, transparent 1px);
-            background-size: 40px 40px;
+            background-image: radial-gradient(rgba(212, 175, 55, 0.08) 1.5px, transparent 1.5px);
+            background-size: 50px 50px;
             pointer-events: none;
             z-index: 0;
+            animation: subtleDrift 20s linear infinite;
         }
 
-        /* Logo styling */
-        .logo {
+        @keyframes subtleDrift {
+            0% { background-position: 0 0; }
+            100% { background-position: 100px 100px; }
+        }
+
+        /* Main container */
+        .app-container {
+            position: relative;
+            z-index: 1;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Glassmorphic card style */
+        .glass-card {
+            background: rgba(8, 8, 8, 0.88);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 28px;
+            box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(212, 175, 55, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        /* Logo */
+        .logo-area {
             text-align: center;
             margin-bottom: 2rem;
-            position: relative;
         }
 
-        .logo h1 {
-            font-size: 3.2rem;
+        .logo-main {
+            font-size: 3.5rem;
             font-weight: 800;
-            background: linear-gradient(135deg, #F3E5AB 0%, #D4AF37 30%, #FFD700 50%, #B8860B 80%, #D4AF37 100%);
+            background: linear-gradient(135deg, #F3E5AB 0%, #D4AF37 25%, #FFD966 50%, #B8860B 75%, #D4AF37 100%);
             background-size: 200% auto;
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            text-shadow: 0 0 30px rgba(212, 175, 55, 0.4);
-            letter-spacing: 3px;
-            animation: shimmer 3s linear infinite;
+            text-shadow: 0 0 25px rgba(212, 175, 55, 0.4);
+            letter-spacing: 4px;
+            animation: shimmerGold 4s linear infinite;
         }
 
-        @keyframes shimmer {
+        @keyframes shimmerGold {
             0% { background-position: 0% center; }
             100% { background-position: 200% center; }
         }
 
-        .logo .tagline {
+        .logo-sub {
             color: #D4AF37;
-            font-size: 0.7rem;
-            letter-spacing: 5px;
-            margin-top: 0.5rem;
+            font-size: 0.75rem;
+            letter-spacing: 6px;
             text-transform: uppercase;
-            font-weight: 300;
-            opacity: 0.9;
+            margin-top: 8px;
+            opacity: 0.8;
         }
 
-        .logo .badge {
-            display: inline-block;
-            background: rgba(212, 175, 55, 0.15);
-            border: 1px solid rgba(212, 175, 55, 0.4);
-            border-radius: 30px;
-            padding: 4px 12px;
+        /* Dashboard grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+            margin-top: 24px;
+        }
+
+        /* Stats cards */
+        .stat-card {
+            background: linear-gradient(145deg, #0d0d0d 0%, #050505 100%);
+            border-radius: 24px;
+            padding: 1.5rem;
+            border-bottom: 2px solid #D4AF37;
+            transition: transform 0.2s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .stat-label {
+            color: #a08a4a;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .stat-value {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #F3E5AB;
+            margin-top: 8px;
+        }
+
+        .stat-change {
             font-size: 0.7rem;
-            color: #D4AF37;
-            margin-top: 12px;
-            letter-spacing: 1px;
+            color: #4caf50;
+            margin-top: 8px;
         }
 
-        .container {
-            background: rgba(8, 8, 8, 0.92);
-            backdrop-filter: blur(12px);
-            border-radius: 28px;
-            padding: 2.2rem;
-            width: 500px;
-            max-width: 100%;
-            border: 1px solid rgba(212, 175, 55, 0.35);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(212, 175, 55, 0.1);
-            transition: all 0.3s ease;
-            position: relative;
-            z-index: 1;
-        }
-
-        h2 {
-            color: #D4AF37;
-            text-align: center;
-            margin-bottom: 1.8rem;
-            font-weight: 600;
-            font-size: 1.6rem;
-            letter-spacing: 1px;
-        }
-
+        /* Form elements */
         .input-group {
-            margin-bottom: 1.3rem;
+            margin-bottom: 1.2rem;
         }
 
         label {
             display: block;
-            color: #E8C86A;
+            color: #D4AF37;
             margin-bottom: 0.5rem;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             letter-spacing: 1px;
             font-weight: 500;
-            text-transform: uppercase;
         }
 
         input, textarea, select {
@@ -125,504 +150,500 @@
             padding: 12px 16px;
             background: #111111;
             border: 1.5px solid #2a2a2a;
-            border-radius: 14px;
-            color: #f0f0f0;
-            font-size: 0.95rem;
-            transition: all 0.2s ease;
-            font-family: inherit;
+            border-radius: 16px;
+            color: #fff;
+            font-size: 0.9rem;
+            transition: all 0.2s;
         }
 
         input:focus, textarea:focus, select:focus {
             outline: none;
             border-color: #D4AF37;
             box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2);
-            background: #0a0a0a;
         }
 
         button {
-            width: 100%;
-            padding: 12px;
             background: linear-gradient(95deg, #D4AF37 0%, #B8860B 100%);
             border: none;
+            padding: 12px 24px;
             border-radius: 40px;
-            color: #000000;
-            font-size: 1rem;
             font-weight: bold;
+            color: #000;
             cursor: pointer;
-            transition: all 0.2s ease;
-            margin-top: 8px;
-            letter-spacing: 1px;
+            transition: all 0.2s;
+            font-size: 0.9rem;
         }
 
         button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.35);
-            filter: brightness(1.05);
+            box-shadow: 0 8px 20px rgba(212, 175, 55, 0.3);
         }
 
-        button:active {
-            transform: translateY(1px);
-        }
-
-        button.secondary {
-            background: linear-gradient(95deg, #2a2a2a 0%, #1a1a1a 100%);
+        .btn-secondary {
+            background: #1f1f1f;
             color: #D4AF37;
             border: 1px solid rgba(212, 175, 55, 0.4);
         }
 
-        .switch-link {
-            text-align: center;
-            margin-top: 1.5rem;
-            color: #888;
-            font-size: 0.85rem;
+        .btn-danger {
+            background: linear-gradient(95deg, #8b0000, #5a0000);
+            color: #ffb3b3;
         }
 
-        .switch-link a {
-            color: #D4AF37;
-            text-decoration: none;
-            cursor: pointer;
-            font-weight: 600;
-            margin-left: 5px;
+        /* Transactions table */
+        .transactions-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
         }
 
-        .switch-link a:hover {
-            text-decoration: underline;
-        }
-
-        .error {
-            background: rgba(220, 53, 69, 0.15);
-            border-left: 4px solid #dc3545;
-            color: #ffa2a2;
-            padding: 12px;
-            border-radius: 12px;
-            margin-bottom: 1.2rem;
+        .transactions-table th {
             text-align: left;
+            padding: 12px 8px;
+            color: #D4AF37;
+            font-weight: 500;
+            font-size: 0.7rem;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+        }
+
+        .transactions-table td {
+            padding: 12px 8px;
+            border-bottom: 1px solid #1a1a1a;
+            color: #ddd;
+            font-size: 0.8rem;
+        }
+
+        .badge-success {
+            background: rgba(76, 175, 80, 0.2);
+            color: #9bff9b;
+            padding: 4px 10px;
+            border-radius: 30px;
+            font-size: 0.7rem;
+        }
+
+        .amount-positive {
+            color: #D4AF37;
+            font-weight: 600;
+        }
+
+        /* Alert & notification */
+        .alert {
+            padding: 14px;
+            border-radius: 16px;
+            margin-bottom: 20px;
             font-size: 0.85rem;
         }
 
-        .success {
-            background: rgba(212, 175, 55, 0.12);
+        .alert-success {
+            background: rgba(212, 175, 55, 0.15);
             border-left: 4px solid #D4AF37;
             color: #F3E5AB;
-            padding: 12px;
-            border-radius: 12px;
-            margin-bottom: 1.2rem;
-            text-align: left;
-            font-size: 0.85rem;
         }
 
-        .card {
-            background: #0a0a0a;
-            border-radius: 18px;
-            padding: 1.2rem;
-            margin-bottom: 1.2rem;
-            border: 1px solid rgba(212, 175, 55, 0.2);
+        .alert-error {
+            background: rgba(220, 53, 69, 0.15);
+            border-left: 4px solid #dc3545;
+            color: #ffb3b3;
         }
 
-        .token-info {
-            background: #000000;
-            padding: 10px;
-            border-radius: 12px;
+        /* Token input simulation */
+        .token-sim {
+            background: #030303;
+            border-radius: 20px;
+            padding: 12px 16px;
             font-family: monospace;
-            font-size: 0.7rem;
+            font-size: 0.75rem;
             color: #D4AF37;
             word-break: break-all;
-            margin-top: 8px;
+            border: 1px dashed rgba(212, 175, 55, 0.5);
         }
 
-        .flex-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .flex-row button {
-            width: auto;
-            padding: 8px 18px;
-        }
-
-        hr {
-            border-color: rgba(212, 175, 55, 0.2);
-            margin: 15px 0;
-        }
-
-        .amount-highlight {
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: #D4AF37;
-        }
-
-        small {
-            display: block;
-            margin-top: 6px;
-            color: #777;
-            font-size: 0.7rem;
-        }
-
-        @media (max-width: 550px) {
-            .container { padding: 1.5rem; }
-            .logo h1 { font-size: 2.2rem; }
+        /* Responsive */
+        @media (max-width: 768px) {
+            .dashboard-grid { grid-template-columns: 1fr; }
+            .logo-main { font-size: 2.2rem; }
+            .app-container { padding: 16px; }
         }
     </style>
 </head>
 <body>
-<div id="root"></div>
+<div class="app-container" id="app">
+    <!-- Dynamic content will be injected by Vue-like vanilla JS -->
+</div>
 
 <script>
-    // ============================================================
-    // CONFIGURATION - UPDATE THIS WITH YOUR RENDER BACKEND URL
-    // ============================================================
-    const API_BASE_URL = 'https://your-backend.onrender.com';  // <-- CHANGE THIS
+    // ============================================
+    // MICASH PROTOTYPE - FULL SIMULATION
+    // No backend, no auth server, pure frontend demo
+    // ============================================
     
-    // For local testing you can use: 'http://localhost:8000' if running PHP locally
-    
-    // ============================================================
-    // FULL REACTIVE APP (Vanilla JS with state management)
-    // ============================================================
-    
-    // Simple state management
-    let currentView = 'login'; // 'login', 'payment'
-    let authData = {
-        email: '',
-        accessToken: ''  // stored after login
-    };
-    
-    // Helper to call backend
-    async function callBackend(endpoint, payload) {
-        const url = `${API_BASE_URL}/${endpoint}`;
-        try {
-            const response = await fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                },
-                body: JSON.stringify(payload)
-            });
-            
-            if (!response.ok) {
-                const errorText = await response.text();
-                throw new Error(`HTTP ${response.status}: ${errorText.substring(0, 100)}`);
-            }
-            
-            const data = await response.json();
-            return data;
-        } catch (err) {
-            console.error('API call failed:', err);
-            throw new Error(err.message || 'Network error. Check if backend is running.');
-        }
-    }
-    
-    // Render the whole app based on state
-    function renderApp() {
-        const root = document.getElementById('root');
-        if (currentView === 'login') {
-            root.innerHTML = renderLoginPage();
-            attachLoginEvents();
-        } else if (currentView === 'payment') {
-            root.innerHTML = renderPaymentPage();
-            attachPaymentEvents();
-        }
-    }
-    
-    // ------------------- LOGIN / SIGNUP PAGE -------------------
-    function renderLoginPage() {
-        return `
-            <div class="container">
-                <div class="logo">
-                    <h1>MICASH</h1>
-                    <div class="tagline"> B2B PAYMENTS </div>
-                    <div class="badge">ENTERPRISE · SECURE · GOLD STANDARD</div>
-                </div>
-                <h2 id="formTitle">Login</h2>
-                <div id="messageArea"></div>
-                <form id="authForm">
-                    <div class="input-group">
-                        <label> Email Address</label>
-                        <input type="email" id="email" placeholder="partner@company.com" required autocomplete="email">
-                    </div>
-                    <div class="input-group">
-                        <label> Password</label>
-                        <input type="password" id="password" placeholder="··········" required autocomplete="current-password">
-                    </div>
-                    <div id="tokenField" class="input-group" style="display: none;">
-                        <label> Firestore Access Token</label>
-                        <input type="text" id="accessToken" placeholder="Paste your OAuth2 access token here">
-                        <small>Required for signup. Token is not stored permanently.</small>
-                    </div>
-                    <button type="submit" id="submitBtn">Login →</button>
-                </form>
-                <div class="switch-link">
-                    <span id="switchText">No account?</span> 
-                    <a id="switchModeBtn">Sign Up</a>
-                </div>
-                <div style="margin-top: 20px; text-align: center; font-size: 11px; color: #555;">
-                     Every session you paste the access token | B2B secured
-                </div>
-            </div>
-        `;
-    }
-    
-    let isLoginMode = true;
-    
-    function attachLoginEvents() {
-        const form = document.getElementById('authForm');
-        const switchBtn = document.getElementById('switchModeBtn');
-        const formTitle = document.getElementById('formTitle');
-        const tokenField = document.getElementById('tokenField');
-        const switchTextSpan = document.getElementById('switchText');
-        const submitBtn = document.getElementById('submitBtn');
-        
-        function updateModeUI() {
-            if (isLoginMode) {
-                formTitle.innerText = 'Login';
-                tokenField.style.display = 'none';
-                switchTextSpan.innerText = 'No account?';
-                switchBtn.innerText = 'Sign Up';
-                submitBtn.innerText = 'Login →';
-            } else {
-                formTitle.innerText = 'Create Account';
-                tokenField.style.display = 'block';
-                switchTextSpan.innerText = 'Already have an account?';
-                switchBtn.innerText = 'Login';
-                submitBtn.innerText = 'Sign Up →';
-            }
-        }
-        
-        switchBtn.onclick = () => {
-            isLoginMode = !isLoginMode;
-            updateModeUI();
-            clearMessages();
-        };
-        
-        form.onsubmit = async (e) => {
-            e.preventDefault();
-            clearMessages();
-            
-            const email = document.getElementById('email').value.trim();
-            const password = document.getElementById('password').value;
-            const accessTokenInput = document.getElementById('accessToken')?.value.trim() || '';
-            
-            if (!email || !password) {
-                showMessage('Email and password are required', 'error');
-                return;
-            }
-            
-            if (!isLoginMode && !accessTokenInput) {
-                showMessage('Access token is required for signup (paste your Firestore token)', 'error');
-                return;
-            }
-            
-            showMessage('Processing...', 'success');
-            
-            try {
-                let payload = {
-                    action: isLoginMode ? 'login' : 'signup',
-                    email: email,
-                    password: password
-                };
-                
-                if (!isLoginMode) {
-                    payload.access_token = accessTokenInput;
-                } else {
-                    // For login, we still need to send token? Actually login endpoint expects access_token field.
-                    // According to backend auth.php, it expects access_token in all requests.
-                    // But for login we don't have token yet. Let's adapt: login uses the stored token from DB.
-                    // But auth.php line: if (empty($accessToken)) { error }
-                    // Wait — reviewing backend: auth.php requires accessToken for every request.
-                    // That's a design choice: they want token to validate firestore connection.
-                    // So we need to ask user to paste token even at login? Not ideal but to keep consistent with spec,
-                    // I'll improve: For login, we also need a valid firestore token to read DB. So we ask token always.
-                    if (!accessTokenInput) {
-                        showMessage('Please paste your Firestore Access Token to authenticate with database', 'error');
-                        return;
-                    }
-                    payload.access_token = accessTokenInput;
-                }
-                
-                // If login mode but token not provided above, handle elegantly
-                if (isLoginMode && !payload.access_token) {
-                    showMessage('Access token required to connect to Firestore', 'error');
-                    return;
-                }
-                
-                const result = await callBackend('auth.php', payload);
-                
-                if (result.success) {
-                    if (isLoginMode) {
-                        // Store token and email for payment page
-                        authData.email = email;
-                        authData.accessToken = payload.access_token;
-                        currentView = 'payment';
-                        renderApp();
-                    } else {
-                        showMessage('Account created! Please login with your credentials.', 'success');
-                        isLoginMode = true;
-                        updateModeUI();
-                        document.getElementById('password').value = '';
-                        document.getElementById('accessToken') && (document.getElementById('accessToken').value = '');
-                    }
-                } else {
-                    showMessage(result.error || 'Authentication failed', 'error');
-                }
-            } catch (err) {
-                showMessage(`Error: ${err.message}`, 'error');
-            }
-        };
-        
-        updateModeUI();
-    }
-    
-    // ------------------- PAYMENT PAGE -------------------
-    function renderPaymentPage() {
-        return `
-            <div class="container">
-                <div class="logo">
-                    <h1>MICASH</h1>
-                    <div class="tagline"> B2B PAYMENTS </div>
-                </div>
-                
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem;">
-                    <span style="color: #D4AF37; font-weight: 500;"> ${escapeHtml(authData.email)}</span>
-                    <button id="logoutBtn" class="secondary" style="width: auto; padding: 6px 18px; margin:0;">Logout</button>
-                </div>
-                
-                <div class="card">
-                    <div class="input-group">
-                        <label> Firestore Access Token (paste for this session)</label>
-                        <input type="text" id="sessionAccessToken" placeholder="Paste your OAuth2 access token" value="${escapeHtml(authData.accessToken || '')}">
-                        <small>Token is required to execute B2B payment. Must have Firestore write access.</small>
-                    </div>
-                </div>
-                
-                <form id="paymentForm">
-                    <div class="input-group">
-                        <label> Amount (USD)</label>
-                        <input type="number" step="0.01" id="amount" placeholder="0.00" required>
-                    </div>
-                    <div class="input-group">
-                        <label> Recipient Business ID / Account</label>
-                        <input type="text" id="recipient" placeholder="Business Tax ID or Account Number" required>
-                    </div>
-                    <div class="input-group">
-                        <label> Description / Reference</label>
-                        <textarea id="description" rows="2" placeholder="Invoice #PO-2025, Contract ref..."></textarea>
-                    </div>
-                    
-                    <div id="paymentMessage"></div>
-                    
-                    <div class="flex-row">
-                        <button type="submit" id="payBtn"> Send B2B Payment</button>
-                        <button type="button" id="resetBtn" class="secondary">⟳ Reset</button>
-                    </div>
-                </form>
-                
-                <div id="transactionResult" style="margin-top: 1rem;"></div>
-                <hr>
-                <div style="font-size: 11px; text-align: center; color: #666;">
-                    MICASH • Secure B2B Gateway • Access token never stored on server
-                </div>
-            </div>
-        `;
-    }
-    
-    function attachPaymentEvents() {
-        const logoutBtn = document.getElementById('logoutBtn');
-        const paymentForm = document.getElementById('paymentForm');
-        const resetBtn = document.getElementById('resetBtn');
-        const amountInput = document.getElementById('amount');
-        const recipientInput = document.getElementById('recipient');
-        const descInput = document.getElementById('description');
-        const tokenInput = document.getElementById('sessionAccessToken');
-        
-        logoutBtn.onclick = () => {
-            currentView = 'login';
-            authData = { email: '', accessToken: '' };
-            renderApp();
-        };
-        
-        resetBtn.onclick = () => {
-            if (amountInput) amountInput.value = '';
-            if (recipientInput) recipientInput.value = '';
-            if (descInput) descInput.value = '';
-            document.getElementById('paymentMessage').innerHTML = '';
-            document.getElementById('transactionResult').innerHTML = '';
-        };
-        
-        paymentForm.onsubmit = async (e) => {
-            e.preventDefault();
-            const messageDiv = document.getElementById('paymentMessage');
-            const resultDiv = document.getElementById('transactionResult');
-            messageDiv.innerHTML = '';
-            resultDiv.innerHTML = '';
-            
-            const accessToken = tokenInput.value.trim();
-            const amount = parseFloat(amountInput.value);
-            const recipient = recipientInput.value.trim();
-            const description = descInput.value.trim();
-            
-            if (!accessToken) {
-                messageDiv.innerHTML = '<div class="error"> Firestore Access Token is required. Paste your token to proceed.</div>';
-                return;
-            }
-            if (isNaN(amount) || amount <= 0) {
-                messageDiv.innerHTML = '<div class="error"> Please enter a valid amount greater than 0.</div>';
-                return;
-            }
-            if (!recipient) {
-                messageDiv.innerHTML = '<div class="error">Recipient Business ID is required.</div>';
-                return;
-            }
-            
-            messageDiv.innerHTML = '<div class="success">Processing B2B transaction... Please wait.</div>';
-            
-            try {
-                const payload = {
-                    access_token: accessToken,
-                    amount: amount,
-                    recipient: recipient,
-                    description: description,
-                    email: authData.email
-                };
-                
-                const response = await callBackend('payment.php', payload);
-                
-                if (response.success) {
-                    resultDiv.innerHTML = `
-                        <div class="success">
-                             <strong>PAYMENT COMPLETED</strong><br>
-                            Transaction ID: ${escapeHtml(response.transaction_id)}<br>
-                            Amount: <span class="amount-highlight">$${response.amount}</span><br>
-                            Recipient: ${escapeHtml(response.recipient)}<br>
-                            Status: Settled ✓
-                        </div>
-                    `;
-                    // Optional: clear form fields after success
-                    amountInput.value = '';
-                    recipientInput.value = '';
-                    descInput.value = '';
-                    messageDiv.innerHTML = '';
-                } else {
-                    messageDiv.innerHTML = `<div class="error">❌ Payment failed: ${escapeHtml(response.error || 'Unknown error')}</div>`;
-                }
-            } catch (err) {
-                messageDiv.innerHTML = `<div class="error">❌ Backend error: ${escapeHtml(err.message)}<br><small>Make sure backend URL is correct and CORS is enabled.</small></div>`;
-            }
-        };
-    }
+    // --- Mock Database (in-memory) ---
+    let mockState = {
+        loggedIn: false,
+        currentUser: null,
+        users: [
+            { id: 1, email: "demo@b2bcorp.com", password: "gold123", name: "B2B Corp", accessToken: "mock_token_xyz_golden", balance: 48250.75 },
+            { id: 2, email: "vendor@supplychain.io", password: "gold123", name: "SupplyChain Ltd", accessToken: "mock_token_abc", balance: 12500.00 }
+        ],
+        transactions: [
+            { id: "TXN1001", date: "2026-06-10", amount: 12500.00, recipient: "VendorX", status: "completed", type: "sent", description: "Invoice INV-4421" },
+            { id: "TXN1002", date: "2026-06-08", amount: 3450.50, recipient: "LogisticsPro", status: "completed", type: "sent", description: "Freight payment" },
+            { id: "TXN1003", date: "2026-06-05", amount: 8900.00, recipient: "TechGrid Solutions", status: "completed", type: "sent", description: "Software licensing" },
+            { id: "TXN1004", date: "2026-06-12", amount: 2300.00, recipient: "OfficeHub", status: "pending", type: "sent", description: "Office supplies bulk" }
+        ],
+        accessTokenInput: ""  // simulates token paste
+            };
     
     // Helper functions
-    function showMessage(msg, type) {
-        const msgDiv = document.getElementById('messageArea');
-        if (msgDiv) {
-            msgDiv.innerHTML = `<div class="${type}">${escapeHtml(msg)}</div>`;
+    function formatCurrency(amount) {
+        return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(amount);
+    }
+    
+    function getRandomTxnId() {
+        return "MIC" + Date.now() + Math.floor(Math.random() * 10000);
+    }
+    
+    function showNotification(message, type = 'success', duration = 3000) {
+        const notifDiv = document.getElementById('globalNotification');
+        if (notifDiv) {
+            notifDiv.innerHTML = `<div class="alert alert-${type}">${message}</div>`;
+            setTimeout(() => {
+                if (notifDiv) notifDiv.innerHTML = '';
+            }, duration);
         }
     }
     
-    function clearMessages() {
-        const msgDiv = document.getElementById('messageArea');
-        if (msgDiv) msgDiv.innerHTML = '';
+    // Render engine
+    function renderApp() {
+        const appEl = document.getElementById('app');
+        if (!mockState.loggedIn) {
+            appEl.innerHTML = renderLoginScreen();
+            attachLoginEvents();
+        } else {
+            appEl.innerHTML = renderDashboard();
+            attachDashboardEvents();
+            updateDashboardStats();
+            renderTransactionHistory();
+        }
+    }
+    
+    // ---------- LOGIN SCREEN (simulated) ----------
+    function renderLoginScreen() {
+        return `
+            <div class="glass-card" style="max-width: 480px; margin: 5vh auto; padding: 2rem;">
+                <div class="logo-area">
+                    <div class="logo-main">MICASH</div>
+                    <div class="logo-sub">✦ B2B PAYMENT GATEWAY ✦</div>
+                    <div style="margin-top: 15px;">
+                        <span style="background: #1a1a1a; padding: 5px 12px; border-radius: 30px; font-size: 0.7rem; color:#D4AF37;">SIMULATED PROTOTYPE</span>
+                    </div>
+                </div>
+                
+                <div id="loginMessage"></div>
+                
+                <div class="input-group">
+                    <label> Business Email</label>
+                    <input type="email" id="loginEmail" placeholder="demo@b2bcorp.com" value="demo@b2bcorp.com">
+                </div>
+                <div class="input-group">
+                    <label> Password</label>
+                    <input type="password" id="loginPassword" placeholder="••••••" value="gold123">
+                </div>
+                
+                <div class="input-group">
+                    <label> Firestore Access Token (simulated)</label>
+                    <input type="text" id="simulatedToken" placeholder="Paste any token to simulate B2B auth" value="mock_golden_token_2026">
+                    <small style="display: block; margin-top: 6px; color:#888;">In prototype, any non-empty token works</small>
+                </div>
+                
+                <button id="simulateLoginBtn" style="width:100%; margin-top: 8px;">➜ Access Dashboard</button>
+                
+                <div style="margin-top: 25px; text-align: center; font-size: 12px; color: #5a5a5a; border-top: 1px solid #222; padding-top: 20px;">
+                    Demo credentials: demo@b2bcorp.com / gold123<br>
+                     Full B2B simulation — no backend required
+                </div>
+            </div>
+        `;
+    }
+    
+    function attachLoginEvents() {
+        const loginBtn = document.getElementById('simulateLoginBtn');
+        if (!loginBtn) return;
+        
+        loginBtn.addEventListener('click', () => {
+            const email = document.getElementById('loginEmail')?.value.trim();
+            const pwd = document.getElementById('loginPassword')?.value;
+            const token = document.getElementById('simulatedToken')?.value.trim();
+            const msgDiv = document.getElementById('loginMessage');
+            
+            if (!email || !pwd) {
+                msgDiv.innerHTML = '<div class="alert alert-error"> Email and password required</div>';
+                return;
+            }
+            if (!token) {
+                msgDiv.innerHTML = '<div class="alert alert-error"> Access token required (simulate B2B connection)</div>';
+                return;
+            }
+            
+            // Find user
+            const user = mockState.users.find(u => u.email === email && u.password === pwd);
+            if (user) {
+                mockState.currentUser = { ...user };
+                mockState.accessTokenInput = token;
+                mockState.loggedIn = true;
+                // Also store token simulation
+                showNotification(`Welcome back, ${user.name}. B2B session active.`, 'success');
+                renderApp();
+            } else {
+                msgDiv.innerHTML = '<div class="alert alert-error">Invalid credentials. Use demo@b2bcorp.com / gold123</div>';
+            }
+        });
+    }
+    
+    // ---------- DASHBOARD (payment simulation) ----------
+    function renderDashboard() {
+        const user = mockState.currentUser;
+        if (!user) return `<div>Error: no session</div>`;
+        
+        return `
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; margin-bottom: 20px;">
+                <div class="logo-area" style="margin-bottom:0;">
+                    <div class="logo-main" style="font-size:2rem;">MICASH</div>
+                    <div class="logo-sub">B2B GOLD NETWORK</div>
+                </div>
+                <div style="display: flex; gap: 12px;">
+                    <span style="background: #000000aa; backdrop-filter: blur(4px); padding: 8px 18px; border-radius: 40px; color:#D4AF37; border:1px solid rgba(212,175,55,0.3);">
+                         ${escapeHtml(user.name)}
+                    </span>
+                    <button id="logoutBtnSim" class="btn-secondary"> Logout</button>
+                </div>
+            </div>
+            
+            <!-- Stats row -->
+            <div class="dashboard-grid">
+                <div class="stat-card">
+                    <div class="stat-label">TOTAL BALANCE</div>
+                    <div class="stat-value" id="totalBalanceDisplay">${formatCurrency(user.balance)}</div>
+                    <div class="stat-change">↑ 12% this quarter</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">TOTAL B2B SENT (MTD)</div>
+                    <div class="stat-value" id="totalSentDisplay">${formatCurrency(calculateTotalSent())}</div>
+                    <div class="stat-change">+3 new transactions</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">ACCESS TOKEN STATUS</div>
+                    <div class="stat-value" style="font-size:1rem;"> Active Session</div>
+                    <div class="token-sim" style="margin-top: 8px;">${mockState.accessTokenInput.substring(0, 20)}...</div>
+                </div>
+            </div>
+            
+            <!-- Two column layout: Payment form + Recent -->
+            <div style="display: grid; grid-template-columns: 1fr 1.5fr; gap: 24px; margin-top: 32px;">
+                <!-- Left: Send B2B Payment -->
+                <div class="glass-card" style="padding: 1.5rem;">
+                    <h3 style="color:#D4AF37; margin-bottom: 1rem; font-size:1.3rem;"> Initiate B2B Payment</h3>
+                    <div id="paymentMsgSim"></div>
+                    <div class="input-group">
+                        <label> Recipient Business ID</label>
+                        <input type="text" id="recipientB2B" placeholder="Vendor ID / Company Reg" value="SupplyChain Ltd">
+                    </div>
+                    <div class="input-group">
+                        <label> Amount (USD)</label>
+                        <input type="number" id="paymentAmount" step="0.01" placeholder="0.00" value="1250.00">
+                    </div>
+                    <div class="input-group">
+                        <label> Reference / PO Number</label>
+                        <input type="text" id="paymentRef" placeholder="Invoice #, Contract ref" value="PO-2026-042">
+                    </div>
+                    <div class="input-group">
+                        <label> Confirm Access Token (paste to simulate)</label>
+                        <input type="text" id="confirmTokenField" placeholder="Firestore access token" value="${mockState.accessTokenInput}">
+                    </div>
+                    <div style="display: flex; gap: 12px;">
+                        <button id="sendPaymentBtn" style="flex:2;"> Send B2B Payment</button>
+                        <button id="resetFormBtn" class="btn-secondary" style="flex:1;">Reset</button>
+                    </div>
+                </div>
+                
+                <!-- Right: Recent transactions -->
+                <div class="glass-card" style="padding: 1.5rem;">
+                    <h3 style="color:#D4AF37; margin-bottom: 1rem; font-size:1.3rem;"> B2B Transaction Log</h3>
+                    <div id="transactionHistoryContainer" style="max-height: 320px; overflow-y: auto;">
+                        <!-- dynamic table -->
+                    </div>
+                    <button id="clearHistoryBtn" class="btn-secondary" style="margin-top: 15px; width:100%; background:#141414;">⟳ Reset Demo Data</button>
+                </div>
+            </div>
+            
+            <!-- Extra info -->
+            <div class="glass-card" style="margin-top: 28px; padding: 1rem 1.5rem; text-align: center;">
+                <span style="color:#B8860B;"> MICASH B2B SIMULATOR — Every transaction uses access token simulation. All data stored locally for demo.</span>
+            </div>
+            
+            <div id="globalNotification" style="position: fixed; bottom: 20px; right: 20px; z-index: 1000; max-width: 350px;"></div>
+        `;
+    }
+    
+    function calculateTotalSent() {
+        const sentTxns = mockState.transactions.filter(t => t.type === 'sent' && t.status === 'completed');
+        return sentTxns.reduce((sum, t) => sum + t.amount, 0);
+    }
+    
+    function updateDashboardStats() {
+        if (!mockState.currentUser) return;
+        const balanceSpan = document.getElementById('totalBalanceDisplay');
+        const sentSpan = document.getElementById('totalSentDisplay');
+        if (balanceSpan) balanceSpan.innerText = formatCurrency(mockState.currentUser.balance);
+        if (sentSpan) sentSpan.innerText = formatCurrency(calculateTotalSent());
+    }
+    
+    function renderTransactionHistory() {
+        const container = document.getElementById('transactionHistoryContainer');
+        if (!container) return;
+        
+        if (mockState.transactions.length === 0) {
+            container.innerHTML = '<div style="text-align:center;padding:30px;color:#777;">No transactions yet. Send a B2B payment.</div>';
+            return;
+        }
+        
+        let html = `<table class="transactions-table">
+            <thead>
+                <tr><th>Date</th><th>Recipient</th><th>Amount</th><th>Status</th><th>Ref</th></tr>
+            </thead>
+            <tbody>`;
+        
+        [...mockState.transactions].reverse().forEach(txn => {
+            html += `
+                <tr>
+                    <td>${txn.date}</td>
+                    <td>${escapeHtml(txn.recipient)}</td>
+                    <td class="amount-positive">${formatCurrency(txn.amount)}</td>
+                    <td><span class="badge-success">${txn.status}</span></td>
+                    <td style="font-size:0.7rem;">${escapeHtml(txn.description.substring(0, 20))}</td>
+                </tr>
+            `;
+        });
+        html += `</tbody></table>`;
+        container.innerHTML = html;
+    }
+    
+    function attachDashboardEvents() {
+        const logoutBtn = document.getElementById('logoutBtnSim');
+        if (logoutBtn) {
+            logoutBtn.addEventListener('click', () => {
+                mockState.loggedIn = false;
+                mockState.currentUser = null;
+                renderApp();
+            });
+        }
+        
+        const sendBtn = document.getElementById('sendPaymentBtn');
+        const resetBtn = document.getElementById('resetFormBtn');
+        const clearHistoryBtn = document.getElementById('clearHistoryBtn');
+        
+        if (sendBtn) {
+            sendBtn.addEventListener('click', () => {
+                simulateB2BPayment();
+            });
+        }
+        
+        if (resetBtn) {
+            resetBtn.addEventListener('click', () => {
+                document.getElementById('recipientB2B').value = '';
+                document.getElementById('paymentAmount').value = '';
+                document.getElementById('paymentRef').value = '';
+                document.getElementById('confirmTokenField').value = mockState.accessTokenInput || 'mock_token';
+                const msgDiv = document.getElementById('paymentMsgSim');
+                if (msgDiv) msgDiv.innerHTML = '';
+            });
+        }
+        
+        if (clearHistoryBtn) {
+            clearHistoryBtn.addEventListener('click', () => {
+                // reset only demo transactions keep at least one
+                mockState.transactions = [
+                    { id: "TXN1001", date: "2026-06-10", amount: 12500.00, recipient: "VendorX", status: "completed", type: "sent", description: "Invoice INV-4421" },
+                    { id: "TXN1002", date: "2026-06-08", amount: 3450.50, recipient: "LogisticsPro", status: "completed", type: "sent", description: "Freight payment" }
+                ];
+                if (mockState.currentUser) mockState.currentUser.balance = 48250.75;
+                updateDashboardStats();
+                renderTransactionHistory();
+                showNotification("Demo data reset to default", "success");
+            });
+        }
+    }
+    
+    function simulateB2BPayment() {
+        const recipient = document.getElementById('recipientB2B')?.value.trim();
+        const amount = parseFloat(document.getElementById('paymentAmount')?.value);
+        const reference = document.getElementById('paymentRef')?.value.trim() || "B2B Transfer";
+        const tokenField = document.getElementById('confirmTokenField')?.value.trim();
+        const msgDiv = document.getElementById('paymentMsgSim');
+        
+        if (!recipient) {
+            msgDiv.innerHTML = '<div class="alert alert-error">Recipient Business ID required</div>';
+            return;
+        }
+        if (isNaN(amount) || amount <= 0) {
+            msgDiv.innerHTML = '<div class="alert alert-error">Valid amount > 0 required</div>';
+            return;
+        }
+        if (!tokenField) {
+            msgDiv.innerHTML = '<div class="alert alert-error">Firestore Access Token is required (paste token to simulate B2B auth)</div>';
+            return;
+        }
+        
+        // simulate token validation (any non-empty token works in prototype)
+        if (tokenField.length < 3) {
+            msgDiv.innerHTML = '<div class="alert alert-error">Invalid token format. Use a simulated token like "golden_b2b_key"</div>';
+            return;
+        }
+        
+        // Check balance
+        const userBalance = mockState.currentUser.balance;
+        if (amount > userBalance) {
+            msgDiv.innerHTML = `<div class="alert alert-error">Insufficient balance. Available: ${formatCurrency(userBalance)}</div>`;
+            return;
+        }
+        
+        // Deduct balance
+        mockState.currentUser.balance -= amount;
+        
+        // Create transaction record
+        const newTransaction = {
+            id: getRandomTxnId(),
+            date: new Date().toISOString().slice(0, 10),
+            amount: amount,
+            recipient: recipient,
+            status: "completed",
+            type: "sent",
+            description: reference
+        };
+        
+        mockState.transactions.push(newTransaction);
+        
+        // Update UI stats & history
+        updateDashboardStats();
+        renderTransactionHistory();
+        
+        // Show success message with B2B simulation
+        msgDiv.innerHTML = `
+            <div class="alert alert-success">
+                 B2B PAYMENT EXECUTED<br>
+                 ${formatCurrency(amount)} sent to ${escapeHtml(recipient)}<br>
+                 Reference: ${escapeHtml(reference)}<br>
+                 Authorized with access token: ${tokenField.substring(0, 6)}...
+            </div>
+        `;
+        
+        // Reset amount field optionally
+        document.getElementById('paymentAmount').value = '';
+        showNotification(`Payment of ${formatCurrency(amount)} completed successfully.`, 'success', 4000);
+        
+        // auto scroll to transaction log
+        const txnContainer = document.getElementById('transactionHistoryContainer');
+        if (txnContainer) txnContainer.scrollTop = 0;
     }
     
     function escapeHtml(str) {
@@ -632,29 +653,11 @@
             if (m === '<') return '&lt;';
             if (m === '>') return '&gt;';
             return m;
-        }).replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, function(c) {
-            return c;
         });
     }
     
-    // Check API base URL configuration
-    window.onload = () => {
-        if (API_BASE_URL === 'https://your-backend.onrender.com' || API_BASE_URL.includes('your-backend')) {
-            const root = document.getElementById('root');
-            root.innerHTML = `
-                <div class="container" style="text-align:center">
-                    <div class="logo"><h1>MICASH</h1></div>
-                    <div class="error" style="margin-top:20px">
-                         Configuration Required<br>
-                        Please update <strong>API_BASE_URL</strong> inside the HTML to your Render backend URL.<br>
-                        <code style="display:block;margin-top:12px;background:#000;padding:8px">const API_BASE_URL = 'https://your-app.onrender.com';</code>
-                    </div>
-                </div>
-            `;
-            return;
-        }
-        renderApp();
-    };
+    // Initial render
+    renderApp();
 </script>
 </body>
 </html>
