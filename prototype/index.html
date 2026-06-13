@@ -292,7 +292,7 @@
             { id: "TXN1004", date: "2026-06-12", amount: 2300.00, recipient: "OfficeHub", status: "pending", type: "sent", description: "Office supplies bulk" }
         ],
         accessTokenInput: ""  // simulates token paste
-            };
+    };
     
     // Helper functions
     function formatCurrency(amount) {
@@ -306,7 +306,7 @@
     function showNotification(message, type = 'success', duration = 3000) {
         const notifDiv = document.getElementById('globalNotification');
         if (notifDiv) {
-            notifDiv.innerHTML = `<div class="alert alert-${type}">${message}</div>`;
+            notifDiv.innerHTML = `<div class="alert alert-${type}">✨ ${message}</div>`;
             setTimeout(() => {
                 if (notifDiv) notifDiv.innerHTML = '';
             }, duration);
@@ -333,7 +333,7 @@
             <div class="glass-card" style="max-width: 480px; margin: 5vh auto; padding: 2rem;">
                 <div class="logo-area">
                     <div class="logo-main">MICASH</div>
-                    <div class="logo-sub">✦ B2B PAYMENT GATEWAY ✦</div>
+                    <div class="logo-sub">B2B PAYMENT GATEWAY </div>
                     <div style="margin-top: 15px;">
                         <span style="background: #1a1a1a; padding: 5px 12px; border-radius: 30px; font-size: 0.7rem; color:#D4AF37;">SIMULATED PROTOTYPE</span>
                     </div>
@@ -359,7 +359,7 @@
                 <button id="simulateLoginBtn" style="width:100%; margin-top: 8px;">➜ Access Dashboard</button>
                 
                 <div style="margin-top: 25px; text-align: center; font-size: 12px; color: #5a5a5a; border-top: 1px solid #222; padding-top: 20px;">
-                    Demo credentials: demo@b2bcorp.com / gold123<br>
+                     Demo credentials: demo@b2bcorp.com / gold123<br>
                      Full B2B simulation — no backend required
                 </div>
             </div>
@@ -413,7 +413,7 @@
                 </div>
                 <div style="display: flex; gap: 12px;">
                     <span style="background: #000000aa; backdrop-filter: blur(4px); padding: 8px 18px; border-radius: 40px; color:#D4AF37; border:1px solid rgba(212,175,55,0.3);">
-                         ${escapeHtml(user.name)}
+                     ${escapeHtml(user.name)}
                     </span>
                     <button id="logoutBtnSim" class="btn-secondary"> Logout</button>
                 </div>
@@ -631,7 +631,7 @@
         msgDiv.innerHTML = `
             <div class="alert alert-success">
                  B2B PAYMENT EXECUTED<br>
-                 ${formatCurrency(amount)} sent to ${escapeHtml(recipient)}<br>
+                  ${formatCurrency(amount)} sent to ${escapeHtml(recipient)}<br>
                  Reference: ${escapeHtml(reference)}<br>
                  Authorized with access token: ${tokenField.substring(0, 6)}...
             </div>
